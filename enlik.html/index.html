@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Алматы Энергетика және Электронды Технологиялар Колледжі</title>
+    <link rel="stylesheet" href="enlik.css">
+    <!-- Leaflet.js карта кітапханасы -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/enlik.js"></script>
+</head>
+<body>
+
+    <div id="auth-overlay" class="auth-overlay">
+        <div class="auth-card">
+            <div class="energy-glow"></div>
+            <h2>⚡ ЭНЕРГО КОЛЛЕДЖ</h2>
+            <p>Басқару панеліне кіру үшін жүйеге тіркеліңіз</p>
+            <form id="login-form">
+                <div class="input-group">
+                    <label>Аты-жөні немесе Email</label>
+                    <input type="text" id="username" placeholder="Мысалы: Айсұлу" required>
+                </div>
+                <div class="input-group">
+                    <label>Құпия сөз</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="glow-btn">Жүйеге кіру ⚡</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. НЕГІЗГІ САЙТ ИНТЕРФЕЙСІ (Кіргеннен кейін ашылады) -->
+    <div id="app-container" class="app-container blur-content">
+        <!-- Сол жақтағы навигациялық мәзір -->
+        <aside class="sidebar">
+            <div class="college-logo">
+                <div class="bolt-icon">⚡</div>
+                <h2>AETTC <span>ENERGO</span></h2>
+            </div>
+
+            <nav class="nav-menu">
+                <ul>
+                    <li class="nav-item active" data-tab="home">
+                        <span class="icon">🏠</span>
+                        <span>Басты бет</span>
+                    </li>
+                    <li class="nav-item" data-tab="registered-users">
+                        <span class="icon">👥</span>
+                        <span>Сайтқа тіркелгендер</span>
+                    </li>
+                    <li class="nav-item" data-tab="group-list">
+                        <span class="icon">📋</span>
+                        <span>Группа тізімі</span>
+                    </li>
+                    <li class="nav-item" data-tab="map-location">
+                        <span class="icon">📍</span>
+                        <span>Картадан мекенжай</span>
+                    </li>
+                    <li class="nav-item" data-tab="settings">
+                        <span class="icon">⚙️</span>
+                        <span>Баптаулар</span>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="user-profile">
+                <span class="avatar">🎓</span>
+                <div class="user-info">
+                    <h4 id="user-display-name">Студент</h4>
+                    <p>Белсенді қолданушы</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <section id="home" class="content-section active">
+                <header class="section-header">
+                    <h1>Басты бет (Dashboard)</h1>
+                    <p>Алматы энергетика және электронды технологиялар колледжінің порталы</p>
+                </header>
+
+                <div class="stats-grid">
+                    <div class="stat-card neon-blue">
+                        <h3>Студенттер саны</h3>
+                        <p class="stat-num">1,450+</p>
+                    </div>
+                    <div class="stat-card neon-green">
+                        <h3>Мамандықтар</h3>
+                        <p class="stat-num">12 сала</p>
+                    </div>
+                    <div class="stat-card neon-purple">
+                        <h3>Оқытушылар</h3>
+                        <p class="stat-num">85 маман</p>
+                    </div>
+                </div>
+
+                <h2 class="sub-title">Негізгі бағыттар</h2>
+                <div class="dept-grid">
+                    <div class="dept-card">
+                        <h3>⚡ Электрмен қамтамасыз ету</h3>
+                        <p>Жоғары кернеулі желілер мен релелік қорғаныс мамандықтары.</p>
+                    </div>
+                    <div class="dept-card">
+                        <h3>💻 Компьютерлік бағдарламалау</h3>
+                        <p>Веб-әзірлеу, бағдарламалық қамтамасыз ету және IT жүйелер.</p>
+                    </div>
+                    <div class="dept-card">
+                        <h3>🔌 Электроника және робототехника</h3>
+                        <p>Микроконтроллерлер, схематехника және автоматтандыру.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="registered-users" class="content-section">
+                <header class="section-header">
+                    <h1>Сайтқа тіркелген пайдаланушылар</h1>
+                    <p>Жүйедегі студенттер мен оқытушылар тізімі</p>
+                </header>
+
+                <div class="table-card">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Пайдаланушы</th>
+                                <th>Рөлі</th>
+                                <th>Тіркелген уақыты</th>
+                                <th>Мәртебесі</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Айсұлу Ерланқызы</td>
+                                <td>Студент</td>
+                                <td>Бүгін, 09:15</td>
+                                <td><span class="badge online">Онлайн</span></td>
+                            </tr>
+                            <tr>
+                                <td>Самғар Ералыұлы</td>
+                                <td>Студент</td>
+                                <td>Кеше, 14:20</td>
+                                <td><span class="badge offline">Оффлайн</span></td>
+                            </tr>
+                            <tr>
+                                <td>Айкөркем Ерланқызы</td>
+                                <td>Оқытушы</td>
+                                <td>24.09.2026</td>
+                                <td><span class="badge online">Онлайн</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="group-list" class="content-section">
+                <header class="section-header">
+                    <h1>Толық группа списогы</h1>
+                    <p>Колледж топтары мен студенттер тізімі</p>
+                </header>
+
+                <div class="group-container">
+                    <div class="group-card">
+                        <div class="group-header">
+                            <h3>Топ: ВТиПО-31</h3>
+                            <span class="student-count">24 студент</span>
+                        </div>
+                        <ul class="student-list">
+                            <li>1. Абдуллаев Данияр</li>
+                            <li>2. Ахметов Руслан</li>
+                            <li>3. Берікова Аружан</li>
+                            <li>4. Жұмабеков Асан</li>
+                            <li>5. Қасымов Тимур</li>
+                        </ul>
+                    </div>
+
+                    <div class="group-card">
+                        <div class="group-header">
+                            <h3>Топ: ЭЛ-32</h3>
+                            <span class="student-count">20 студент</span>
+                        </div>
+                        <ul class="student-list">
+                            <li>1. Әлиев Бауыржан</li>
+                            <li>2. Ержанов Серік</li>
+                            <li>3. Оспанова Динара</li>
+                            <li>4. Төлеуов Мақсат</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="map-location" class="content-section">
+                <header class="section-header">
+                    <h1>Колледждің орналасқан жері</h1>
+                    <p>Картадан Алматы Энергетика және электронды технологиялар колледжін қараңыз</p>
+                </header>
+
+                <div class="map-box">
+                    <div class="map-info">
+                        <h3>📍 Энерго Колледж Мекенжайы</h3>
+                        <p><strong>Мекенжай:</strong> Алматы қ., Жандосов көшесі, 61</p>
+                        <p><strong>Байланыс телефоны:</strong> +7 (727) 275-55-12</p>
+                        <p><strong>E-mail:</strong> info@aettc.kz</p>
+                    </div>
+                    <div id="map"></div>
+                </div>
+            </section>
+
+            <section id="settings" class="content-section">
+                <header class="section-header">
+                    <h1>Баптаулар (Settings)</h1>
+                    <p>Порталдың ішкі баптаулары мен қауіпсіздік параметрлері</p>
+                </header>
+
+                <div class="settings-card">
+                    <div class="setting-item">
+                        <div>
+                            <h4>Қараңғы стиль (Dark Theme)</h4>
+                            <p>Энергетикалық неон дизайны</p>
+                        </div>
+                        <input type="checkbox" checked disabled>
+                    </div>
+                    <div class="setting-item">
+                        <div>
+                            <h4>Хабарландырулар</h4>
+                            <p>Жаңа жаңалықтар мен сабақ кестесін алу</p>
+                        </div>
+                        <input type="checkbox" checked>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="./enlik.js"></script>
+</body>
+</html>
